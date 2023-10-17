@@ -22,9 +22,4 @@ export class Trader implements Employee {
         this.posteDeTravail.addEquipment(moniteur);
         this.posteDeTravail.addEquipment(pcAvecEcran);
     }
-
-    reglesAttribution(equipement: CoutEquipement): void {
-        throw new Error("Method not implemented.");
-    }
-
 }

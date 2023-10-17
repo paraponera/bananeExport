@@ -16,10 +16,4 @@ export class Developpeur implements Employee {
         this.prenom = prenom;
         this.budget = 3000;
     }
-    
-    
-    reglesAttribution(equipement: CoutEquipement): void {
-        throw new Error("Method not implemented.");
-    }
-
 }

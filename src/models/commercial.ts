@@ -22,16 +22,5 @@ export class Commercial implements Employee {
         const smartphone = new Smartphone(600);
         this.posteDeTravail.addEquipment(smartphone);
     }
-    
-    reglesAttribution(equipement: CoutEquipement): void {
-        if(this.budget > this.posteDeTravail.getCoutTotal()) {
-            if (equipement instanceof Laptop) {
-                console.log("Laptop");
-            } else {
-                console.log("out of scope");
-            }
-        }
-        console.log("poste de travail => ",this.posteDeTravail);
-    }
 
 }

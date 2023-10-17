@@ -6,6 +6,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { EmployeeService } from 'src/services/employe-service';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatInputModule,
     MatButtonModule
   ],
-  providers: [],
+  providers: [EmployeeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

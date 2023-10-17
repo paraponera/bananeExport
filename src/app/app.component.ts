@@ -10,6 +10,7 @@ import { Smartphone } from 'src/models/equipements/smartphone';
 import { TelFixe } from 'src/models/equipements/tel-fixe';
 import { PosteDeTravail } from 'src/models/posteDeTravail';
 import { Trader } from 'src/models/trader';
+import { EmployeeService } from 'src/services/employe-service';
 import { prixEquipements } from 'src/static-data/static-data';
 
 @Component({
@@ -40,6 +41,8 @@ export class AppComponent  implements OnInit {
 
   listeEmployes: Employee[] = [];
   
+  constructor(private employeeService: EmployeeService) {}
+
   ngOnInit(): void {
     let commercialStatic = new Commercial(Math.random(), 'Foulen', 'Falten');
     let posteDeTravailStatic = new PosteDeTravail();
@@ -56,6 +59,7 @@ export class AppComponent  implements OnInit {
       case 'D':
         this.nouvelArrivant = new Developpeur(Math.random(), this.nom, this.prenom);
         this.budget = this.nouvelArrivant.budget;
+        this.nouveauPosteTravail = this.nouvelArrivant.posteDeTravail;
         break;
       case 'T':
         this.nouvelArrivant = new Trader(Math.random(), this.nom, this.prenom);
@@ -143,7 +147,7 @@ export class AppComponent  implements OnInit {
     if (this.nouvelArrivant.budget == 0) {
       return true;
     } else {
-      return this.budgetRestant() > cout;
+      return this.budgetRestant() >= cout;
     } 
   }
 
@@ -156,6 +160,10 @@ export class AppComponent  implements OnInit {
     setTimeout(() => {
       this.msgAlert = '';
     }, 5000);
+  }
+
+  enregistrerEmployee() {
+    this.employeeService.ajoutNouvelEmployee(this.nouvelArrivant);
   }
 
 }
