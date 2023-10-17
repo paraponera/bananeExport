@@ -16,4 +16,13 @@ export class Developpeur implements Employee {
         this.prenom = prenom;
         this.budget = 3000;
     }
+    getNom() {
+        return this.nom;
+    }
+    getPrenom() {
+        return this.prenom;
+    }
+    getBudget() {
+        return this.budget;
+    }
 }

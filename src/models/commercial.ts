@@ -23,4 +23,14 @@ export class Commercial implements Employee {
         this.posteDeTravail.addEquipment(smartphone);
     }
 
+    getNom() {
+        return this.nom;
+    }
+    getPrenom() {
+        return this.prenom;
+    }
+    getBudget() {
+        return this.budget;
+    }
+
 }

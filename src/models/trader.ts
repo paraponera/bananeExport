@@ -22,4 +22,14 @@ export class Trader implements Employee {
         this.posteDeTravail.addEquipment(moniteur);
         this.posteDeTravail.addEquipment(pcAvecEcran);
     }
+
+    getNom() {
+        return this.nom;
+    }
+    getPrenom() {
+        return this.prenom;
+    }
+    getBudget() {
+        return this.budget;
+    }
 }
