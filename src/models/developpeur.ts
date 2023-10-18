@@ -1,5 +1,4 @@
 import { Employee } from "./employe";
-import { CoutEquipement } from "./equipements/coutEquipement";
 import { PosteDeTravail } from "./posteDeTravail";
 
 export class Developpeur implements Employee {
@@ -16,10 +15,24 @@ export class Developpeur implements Employee {
         this.prenom = prenom;
         this.budget = 3000;
     }
-    
-    
-    reglesAttribution(equipement: CoutEquipement): void {
-        throw new Error("Method not implemented.");
+
+    getNom() {
+        return this.nom;
     }
 
+    getPrenom() {
+        return this.prenom;
+    }
+
+    getBudget() {
+        return this.budget;
+    }
+
+    getPosteDeTravail(): PosteDeTravail {
+        return this.posteDeTravail;
+    }
+
+    getPoste(): string {
+        return 'Développeur';
+    }
 }

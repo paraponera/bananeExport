@@ -1,5 +1,4 @@
 import { Employee } from "./employe";
-import { CoutEquipement } from "./equipements/coutEquipement";
 import { Moniteur } from "./equipements/moniteur";
 import { PcAvecEcran } from "./equipements/pc-avec-ecran";
 import { PosteDeTravail } from "./posteDeTravail";
@@ -23,8 +22,23 @@ export class Trader implements Employee {
         this.posteDeTravail.addEquipment(pcAvecEcran);
     }
 
-    reglesAttribution(equipement: CoutEquipement): void {
-        throw new Error("Method not implemented.");
+    getNom() {
+        return this.nom;
     }
 
+    getPrenom() {
+        return this.prenom;
+    }
+
+    getBudget() {
+        return this.budget;
+    }
+
+    getPosteDeTravail(): PosteDeTravail {
+        return this.posteDeTravail;
+    }
+
+    getPoste(): string {
+        return 'Trader';
+    }
 }
