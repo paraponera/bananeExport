@@ -60,7 +60,7 @@
   
     <ng-template [ngIf]="posteSelectionne != ''">
       <h2>Configuration du poste de travail</h2> 
-      <p>Budget alloué : {{budget}}€</p>
+      <p>Budget alloué : <span *ngIf="posteSelectionne != 'T'">{{budget}}€</span> <span *ngIf="posteSelectionne == 'T'">Infini</span></p>
     
       <input type="hidden" #selection>
     
@@ -75,7 +75,7 @@
           <span>({{nouveauPosteTravail.equipementQte('PcAvecEcran')}}) PC fixe {{pcAvecEcran}}€</span>
         </button>
     
-        <button *ngIf="posteSelectionne != 'T'" class="card card-small" (click)="selection.value = 'pwa'" tabindex="0">
+        <button *ngIf="posteSelectionne != 'T'" class="card card-small" (click)="ajoutStationAccueil()">
           <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
           <span>(0) Station d'accueil {{stationAccueil}}€</span>
         </button>
@@ -106,9 +106,10 @@
           <pre>Cout total: {{nouveauPosteTravail.getCoutTotal()}}</pre>
           <pre *ngIf="posteSelectionne != 'T'">Budget restant: {{budgetRestant()}}</pre>
           <pre *ngIf="msgAlert != ''" style="color: red; font-weight: bold;">{{msgAlert}}</pre>
+          <pre *ngIf="msgConfirmation != ''" style="color: greenyellow; font-weight: bold;">{{msgConfirmation}}</pre>
       </div>
   
-      <button class="btn1" (click)="enregistrerEmployee()">
+      <button class="btn1" (click)="enregistrerEmployee()" [disabled]="validerdisabled">
         <span>Valider</span>
       </button>
       <button class="btn1" (click)="listeDesEmployes()">

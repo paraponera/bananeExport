@@ -31,9 +31,14 @@
 
     <div class="terminal">
         <pre *ngFor="let employee of employees">
-            {{ employee.getNom() }} {{ employee.getPrenom() }}
+           => {{ employee.getNom() }} {{ employee.getPrenom() }} est un(e) {{ employee.getPoste() }}
+           <br> {{ employee.getPosteDeTravail().getEquipementsToString() }}
         </pre>
     </div>
+
+    <button class="btn1" (click)="ajoutEmployee()">
+      <span>Ajout employé</span>
+    </button>
   
 
 

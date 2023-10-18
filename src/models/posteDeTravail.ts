@@ -34,4 +34,13 @@ export class PosteDeTravail {
     equipementQte(equipement: string): number {
         return this.equipmentsMap.get(equipement) ?? 0;
     }
+
+    getEquipementsToString(): string {
+        let result = "{\n";
+        for (const [key, value] of this.equipmentsMap) {
+          result += `  "${key}": ${value},\n`;
+        }
+        result += "}";
+        return result;
+    }
 }

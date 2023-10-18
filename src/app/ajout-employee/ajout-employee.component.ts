@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Commercial } from 'src/models/commercial';
 import { Developpeur } from 'src/models/developpeur';
@@ -20,7 +20,7 @@ import { prixEquipements } from 'src/static-data/static-data';
   styleUrls: ['./ajout-employee.component.scss']
 })
 export class AjoutEmployeeComponent {
- 
+
   title = 'banane-export';
   nom: string = '';
   prenom: string = '';
@@ -39,25 +39,18 @@ export class AjoutEmployeeComponent {
   microCasque = prixEquipements.microCasque;
 
   msgAlert: string = '';
+  msgConfirmation: string= '';
+  validerdisabled = false;
 
   listeEmployes: Employee[] = [];
-  
-  constructor(private employeeService: EmployeeService,
-              private router: Router) {}
 
-  ngOnInit(): void {
-    let commercialStatic = new Commercial(Math.random(), 'Foulen', 'Falten');
-    let posteDeTravailStatic = new PosteDeTravail();
-    posteDeTravailStatic = commercialStatic.posteDeTravail;
-    let pcFixe = new PcAvecEcran(prixEquipements.pcAvecEcran);
-    posteDeTravailStatic.addEquipment(pcFixe);
-    this.listeEmployes.push(commercialStatic);
-  }
+  constructor(private employeeService: EmployeeService,
+    private router: Router) { }
 
   selectPoste(poste: string) {
     this.posteSelectionne = poste;
     this.nouveauPosteTravail = new PosteDeTravail();
-    switch(poste) {
+    switch (poste) {
       case 'D':
         this.nouvelArrivant = new Developpeur(Math.random(), this.nom, this.prenom);
         this.budget = this.nouvelArrivant.budget;
@@ -98,15 +91,15 @@ export class AjoutEmployeeComponent {
         this.nouveauPosteTravail.addEquipment(pcFixe);
       } else {
         this.afficherMsgAlerte('Budget insuffisant!!');
-      } 
+      }
     } else {
       this.afficherMsgAlerte('Un seul PC par employé!!');
     }
   }
 
   ajoutMoniteur() {
-    if (!this.nouveauPosteTravail.equipementAjoute('Moniteur') 
-    || (this.nouveauPosteTravail.equipementAjoute('Moniteur') && this.nouveauPosteTravail.equipementQte('Moniteur') < 3)) {
+    if (!this.nouveauPosteTravail.equipementAjoute('Moniteur')
+      || (this.nouveauPosteTravail.equipementAjoute('Moniteur') && this.nouveauPosteTravail.equipementQte('Moniteur') < 3)) {
       if (this.achatPossible(prixEquipements.moniteurSupp)) {
         let moniteur = new Moniteur(prixEquipements.moniteurSupp);
         this.nouveauPosteTravail.addEquipment(moniteur);
@@ -145,18 +138,35 @@ export class AjoutEmployeeComponent {
     }
   }
 
+  ajoutStationAccueil() {
+    if (!this.nouveauPosteTravail.equipementAjoute('Laptop')) {
+      this.afficherMsgAlerte("Un laptop est nécessaire pour commander une station d'accueil!!");
+    } else {
+      if (this.nouveauPosteTravail.equipementAjoute('Laptop') && this.nouveauPosteTravail.equipementQte('StationAccueil') < 1) {
+        if (this.achatPossible(prixEquipements.stationAccueil)) {
+          let stationAccueil = new Moniteur(prixEquipements.stationAccueil);
+          this.nouveauPosteTravail.addEquipment(stationAccueil);
+        } else {
+          this.afficherMsgAlerte('Budget insuffisant!!');
+        }
+      } else {
+        this.afficherMsgAlerte("Une seule station d'accueil autorisé par employé!!");
+      }
+    }
+  }
+
   achatPossible(cout: number) {
     if (this.nouvelArrivant.budget == 0) {
       return true;
     } else {
       return this.budgetRestant() >= cout;
-    } 
+    }
   }
 
   budgetRestant() {
     return this.budget - this.nouveauPosteTravail.getCoutTotal();
   }
-  
+
   afficherMsgAlerte(msg: string) {
     this.msgAlert = msg;
     setTimeout(() => {
@@ -164,8 +174,26 @@ export class AjoutEmployeeComponent {
     }, 5000);
   }
 
+  afficherMsgConfirmation(msg: string) {
+    this.msgConfirmation = msg;
+    setTimeout(() => {
+      this.msgConfirmation = '';
+      this.resetFormulaire();
+      this.validerdisabled = false;
+    }, 5000);
+  }
+
   enregistrerEmployee() {
+    this.validerdisabled = true;
     this.employeeService.ajoutNouvelEmployee(this.nouvelArrivant);
+    this.afficherMsgConfirmation("Le nouvel arrivant a été enregistré avec succès!"); 
+  }
+
+  resetFormulaire() {
+    this.posteSelectionne = '';
+    this.nom = '';
+    this.prenom = '';
+    this.date = '';
   }
 
   listeDesEmployes() {
